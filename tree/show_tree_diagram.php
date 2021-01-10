@@ -6,21 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $final=explode("********************", $final[1]);
     $arr=explode("\r", $final[0]);
     $tree=array();
-    $spaces="        ";
-    $four="    ";
-    $i=-1;
-    $k=0;
+    $string="";
     foreach ($arr as $value) {
-      if(strpos($value,$spaces)!==false) {
-        array_push($tree,$value);
-        $i++;
-      } else if (strpos($value," ")!==false && $k>=3) {
-        $tree[$i].=$value;
-        echo $value;
-        echo "neco";
-
-      }
-      $k++;
+      if(strlen(trim($value)) == 0 && $string!="") {
+        array_push($tree,$string);
+        $string="";
+      } else {
+        $string.=$value;
+      }
     }
 
     print_r($tree);
