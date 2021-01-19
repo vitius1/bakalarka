@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body {
+  font-family: 'Roboto Slab', serif;
+}
 .tree,
 .tree ul,
 .tree li {
@@ -9,6 +12,7 @@
 }
 
 .tree {
+    width: 100%;
     margin: 0 0 1em;
     text-align: center;
 }
@@ -85,3 +89,55 @@
 .tree>li>span:before {
     outline: none;
 }
+
+.subgroups {
+  background-color: #ADD8E6;
+  cursor: pointer;
+}
+.groups {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #87CEFA;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 24px;
+  padding: 10px;
+  width: auto;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.groups span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.groups span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.groups:hover span {
+  padding-right: 25px;
+}
+
+.groups:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.active_field {
+  color: #FFFFFF;
+  background-color: #1E90FF;
+}
+.active_button {
+  background-color: #00BFFF;
+}

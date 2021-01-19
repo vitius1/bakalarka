@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap" rel="stylesheet">
+
 <?php
 // require $resultArray array of memo structure
 require "get_memo_array.php"; //$resultArray
@@ -85,6 +88,7 @@ function find_tree($name, $tree, $key, $i) {
   return array($key,$name);
 }
 
+// if leaf have multiple leafs
 function create_all_diagrams($resultArray, $group2, $subgroup2, $pom2){
   ?>
     <div style="display: none;" id="value_<?php echo $group2.'-'.$subgroup2 ?>">
@@ -92,10 +96,12 @@ function create_all_diagrams($resultArray, $group2, $subgroup2, $pom2){
   // buttons
   foreach ($pom2["all"] as $sg) {
     ?>
-      <button class="groups" id="button_for_<?php echo $group2."-".$sg ?>">
-    <?php echo find_name($resultArray, $group2, $sg);
+      <button class="groups
+         <?php if($sg==$subgroup2){ echo 'active_button'; } ?>
+      " id="button_for_<?php echo $group2."-".$sg ?>">
+    <span><?php echo find_name($resultArray, $group2, $sg);
     ?>
-      </button>
+       </span></button>
     <?php
   }
 
@@ -121,16 +127,18 @@ function find_child($resultArray, $group, $subgroup) {
       foreach ($pom[$subgroup]["groups"] as $value) {
 
         // get minimum cost value
+        $style='';
         if(strpos($value,".")) {
           $pom=explode(".",$value);
           $group2=$pom[0];
           $subgroup2=$pom[1];
-          $style='';
         } else {
           $group2=$value;
           $pom2=find_minimum_cost($resultArray, $value);
           $subgroup2=$pom2["minimum"];
-          $style=' id="for_'.$group2.'-'.$subgroup2.'" class="subgroups" style="background-color: #ADD8E6; cursor: pointer;"';
+          if(count($pom2["all"])>1){
+            $style=' id="for_'.$group2.'-'.$subgroup2.'" class="subgroups"';
+          }
           $value=$group2.".".$subgroup2;
 
         }
@@ -190,99 +198,45 @@ function add_tree_to_memo($resultArray, $group, $subgroup, $tree, $key, $i){
   return ["key"=>$key,"array"=>$resultArray];
 }
 
-?>
-<div id="floor1">
-<?php
-// fill memo with tree and show button
-foreach ($resultArray[$root]["subgroup"] as $pom) {
-  foreach ($pom as $key => $value) {
-    ?><button class="groups" id="button_for_<?php echo $root."-".$key ?>"><?php
-    echo $value["name"];
-    ?></button><?php
-    $tree_name=explode(" ", $tree[0]);
-    if(strpos($tree_name[8],$value["name"])!==false) {
-      $resultArray=add_tree_to_memo($resultArray, $root, $key, $tree, 0, 12)["array"];
-    }
-  }
-}
 
-// show diagram
-foreach ($resultArray[$root]["subgroup"] as $pom) {
-  foreach ($pom as $key => $value) {
-    $tree_name=explode(" ", $tree[0]);
-    // if in tree
-    if(strpos($tree_name[8],$value["name"])!==false) {
-      ?><ul class="tree <?php echo $root." ".$root."-".$key ?>"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$tree[0] ?></span><ul><?php
-      find_child($resultArray, $root, $key);
-      ?></ul></li><?php
-    } else {
-      ?><ul class="tree <?php echo $root." ".$root."-".$key; ?>" style="display:none;"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$value["name"] ?></span><ul><?php
-      find_child($resultArray, $root, $key, ["tree"=>"", "key"=>0, "i"=>0]);
-      ?></ul></li><?php
+function floor1($resultArray, $tree, $root) {
+  // fill memo with tree and show button
+  foreach ($resultArray[$root]["subgroup"] as $pom) {
+
+    foreach ($pom as $key => $value) {
+
+      $tree_name=explode(" ", $tree[0]);
+      ?><button class="groups
+        <?php if(strpos($tree_name[8],$value["name"])!==false) {echo 'active_button'; } ?>"
+      id="button_for_<?php echo $root."-".$key ?>"><span><?php
+      echo $value["name"];
+      ?> </span></button><?php
+      $tree_name=explode(" ", $tree[0]);
+
+      if(strpos($tree_name[8],$value["name"])!==false) {
+
+        $resultArray=add_tree_to_memo($resultArray, $root, $key, $tree, 0, 12)["array"];
+      }
     }
-    ?></ul><?php
+
+  }
+
+
+  // show diagram
+  foreach ($resultArray[$root]["subgroup"] as $pom) {
+    foreach ($pom as $key => $value) {
+      $tree_name=explode(" ", $tree[0]);
+      // if in tree
+      if(strpos($tree_name[8],$value["name"])!==false) {
+        ?><ul class="tree <?php echo $root." ".$root."-".$key ?>"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$tree[0] ?></span><ul><?php
+        find_child($resultArray, $root, $key);
+        ?></ul></li><?php
+      } else {
+        ?><ul class="tree <?php echo $root." ".$root."-".$key; ?>" style="display:none;"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$value["name"] ?></span><ul><?php
+        find_child($resultArray, $root, $key, ["tree"=>"", "key"=>0, "i"=>0]);
+        ?></ul></li><?php
+      }
+      ?></ul><?php
+    }
   }
 }
-
-?>
-
-
-</div>
-2
-<div id="floor2">
-
-</div>
-3
-<div id="floor3">
-
-</div>
-4
-<div id="floor4">
-
-</div>
-5
-<div id="floor5">
-
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-
-
-$('body').on('click', ' .groups', function() {
-  var id = this.id.split("button_for_")[1];
-  $("."+id.split("-")[0]).hide();
-  $("."+id).show();
-});
-
-$('#floor1').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  var content = $(id).html();
-  $('#floor2').html(content);
-  $('#floor3').html("");
-  $('#floor4').html("");
-  $('#floor5').html("");
-});
-
-$('#floor2').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  var content = $(id).html();
-  $('#floor3').html(content);
-  $('#floor4').html("");
-  $('#floor5').html("");
-});
-
-$('#floor3').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  var content = $(id).html();
-  $('#floor4').html(content);
-  $('#floor5').html("");
-});
-
-$('#floor4').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  var content = $(id).html();
-  $('#floor5').html(content);
-});
-
-
-</script>
