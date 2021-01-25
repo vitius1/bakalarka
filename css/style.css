@@ -108,14 +108,14 @@ body {
   margin: 5px;
 }
 
-.groups span {
+.groups span, .rules span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.groups span:after {
+.groups span:after, .rules span:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -124,11 +124,11 @@ body {
   transition: 0.5s;
 }
 
-.groups:hover span {
+.groups:hover span, .rules:hover span {
   padding-right: 25px;
 }
 
-.groups:hover span:after {
+.groups:hover span:after, .rules:hover span:after {
   opacity: 1;
   right: 0;
 }
