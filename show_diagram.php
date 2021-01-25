@@ -228,15 +228,16 @@ function floor1($resultArray, $tree, $root) {
       $tree_name=explode(" ", $tree[0]);
       // if in tree
       if(strpos($tree_name[8],$value["name"])!==false) {
-        ?><ul class="tree <?php echo $root." ".$root."-".$key ?>"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$tree[0] ?></span><ul><?php
+        ?><div class="center"><ul class="tree <?php echo $root." ".$root."-".$key ?>"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$tree[0] ?></span><ul><?php
         find_child($resultArray, $root, $key);
         ?></ul></li><?php
       } else {
-        ?><ul class="tree <?php echo $root." ".$root."-".$key; ?>" style="display:none;"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$value["name"] ?></span><ul><?php
+        ?><div class="center"><ul class="tree <?php echo $root." ".$root."-".$key; ?>" style="display:none;"><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$value["name"] ?></span><ul><?php
         find_child($resultArray, $root, $key, ["tree"=>"", "key"=>0, "i"=>0]);
         ?></ul></li><?php
       }
-      ?></ul><?php
+      ?></ul></div><?php
     }
   }
+  return $resultArray;
 }
