@@ -123,3 +123,24 @@ $('#floor4').on('click', '.subgroups',function(){
   // show active button style
   $("#floor5 #button_for_"+this.id.split("for_")[1]).addClass("active_button");
 });
+
+// transformation rules - show clicked rule
+$('.transformation-rules').on('click', '.rules', function() {
+  var id = this.id.split("rule_for_")[1];
+  $(".rules").removeClass("active_button");
+  $(this).addClass("active_button");
+  $(".rule").hide();
+  $(".rule_"+id).show();
+});
+
+// show transformation rules page
+$("#rules").click(function(){
+  $(".transformation-rules").show();
+  $(".memo-diagram").hide();
+});
+
+// memo diagram page
+$("#memo").click(function(){
+  $(".transformation-rules").hide();
+  $(".memo-diagram").show();
+});
