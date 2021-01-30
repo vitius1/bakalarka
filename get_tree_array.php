@@ -33,12 +33,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!empty($final)) {
     $final=explode("*** Output Tree: ***", $final);
     $final=explode("********************", $final[1]);
+
     $arr=explode("\r", $final[0]);
     $tree=array();
     $string="";
     foreach ($arr as $value) {
+      
       if(strlen(trim($value)) == 0 && $string!="") {
-        array_push($tree,edit_name($string));
+        if(strpos($string, 'Exchange Start') == false){
+          array_push($tree,edit_name($string));
+        }
         $string="";
       } else {
         //after empty row save leaf of tree
