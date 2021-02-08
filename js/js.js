@@ -1,4 +1,6 @@
 
+ 
+
 $('#floor1').on('click', '.groups', function() {
   var id = this.id.split("button_for_")[1];
   // remove all active button style which is below
@@ -143,4 +145,14 @@ $("#rules").click(function(){
 $("#memo").click(function(){
   $(".transformation-rules").hide();
   $(".memo-diagram").show();
+});
+
+$(document).on("mousedown", function (e1) {
+  $(document).one("mouseup", function (e2) {
+    if (e1.which == 2 && e1.target == e2.target) {
+      var e3 = $.event.fix(e2);
+      e3.type = "middleclick";
+      $(e2.target).trigger(e3)
+    }
+  });
 });

@@ -2,22 +2,22 @@
   "_comment": "join",
 
 
-  "name": "Join Commute",
+  "name": "CommLOJN",
   "first": "LogOp_RightOuterJoin",
   "second": "LogOp_LeftOuterJoin",
-  "description": "CommLOJN - right outer join to left outher join </br>select from A join B on A=B => select from B join A on A=B"
+  "description": "Right outer join to left outher join </br>select from A join B on A=B => select from B join A on A=B"
 },{
-  "name": "Join Commute",
+  "name": "JoinCommute",
   "first": "LogOp_Join",
   "second": "LogOp_Join",
-  "description": "JoinCommute select from A join B on A=B => select from B join A on A=B"
+  "description": "Select from A join B on A=B => select from B join A on A=B"
 },{
   "name": "JNtoHS",
   "first": "LogOp_Join",
   "second": "PhyOp_HashJoinx_jtInner",
   "description": "JNtoHS"
 },{
-  "name": "Left Outer Join to Nested Loop",
+  "name": "LOJNtoNL",
   "first": "LogOp_LeftOuterJoin",
   "second": "PhyOp_LoopsJoinx_jtLeftOuter",
   "description": "LOJNtoNL - Logical left outer join to physical nested loop left outer join"
@@ -25,7 +25,7 @@
   "name": "EnforceBatch",
   "first": "PhyOp_HashJoinx_jtInner",
   "second": "PhyOp_ExecutionModeAdapter",
-  "description": "EnforceBatch"
+  "description": "EnforceBatch - ???"
 },
 {
   "_comment": "group aggregation",
@@ -34,7 +34,12 @@
   "name": "GbAggToStrm",
   "first": "LogOp_GbAgg",
   "second": "PhyOp_StreamGbAgg",
-  "description": "GbAggToStrm"
+  "description": "GbAggToStrm - logical group aggregation to physical group aggregation to Hash Stream"
+},{
+  "name": "GbAggToSort",
+  "first": "LogOp_GbAgg",
+  "second": "PhyOp_Sort",
+  "description": "GbAggToSort - logical group aggregation to physical operator sort"
 },
 {
   "_comment": "Other",
@@ -43,11 +48,16 @@
   "name": "EnforceSort",
   "first": "PhyOp_Range",
   "second": "PhyOp_Sort",
-  "description": "EnforceSort"
+  "description": "EnforceSort - use physical operator Sort. (mostly from physical range)"
 },{
   "name": "GetToScan",
   "first": "LogOp_Get",
   "second": "PhyOp_TableScan",
-  "description": "GetToScan"
+  "description": "GetToScan - logical operator get to physical operator Table Scan"
+},{
+  "name": "SelectToFilter",
+  "first": "LogOp_SelectRes",
+  "second": "PhyOp_Filter",
+  "description": "SelectToFilter - logical operator select to physical operator filter"
 }
 ]

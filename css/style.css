@@ -93,7 +93,7 @@ body {
   background-color: #ADD8E6;
   cursor: pointer;
 }
-.groups, .rules {
+.groups, .rules, .replace-groups {
   display: inline-block;
   border-radius: 4px;
   background-color: #87CEFA;
@@ -108,14 +108,14 @@ body {
   margin: 5px;
 }
 
-.groups span, .rules span {
+.groups span, .rules span, .replace-groups span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.groups span:after, .rules span:after {
+.groups span:after, .rules span:after, .replace-groups span:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -124,11 +124,11 @@ body {
   transition: 0.5s;
 }
 
-.groups:hover span, .rules:hover span {
+.groups:hover span, .rules:hover span, .replace-groups:hover span {
   padding-right: 25px;
 }
 
-.groups:hover span:after, .rules:hover span:after {
+.groups:hover span:after, .rules:hover span:after, .replace-groups:hover span:after {
   opacity: 1;
   right: 0;
 }
@@ -138,7 +138,7 @@ body {
   background-color: #1E90FF;
 }
 .active_button {
-  background-color: #00BFFF;
+  color: yellow;
 }
 
 .center {
@@ -174,4 +174,56 @@ body {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+.replace-dialog {
+  position: absolute; 
+  background-color: white; 
+  border: 1px black solid;
+  border-radius: 5px;
+  z-index: 1; 
+  top: 15%;
+  height: 70%;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 70%;
+  text-align: center;
+}
+
+.phy-button {
+  background-color: blue;
+}
+
+.log-button {
+  background-color: red;
+}
+
+.opacity10 {
+  opacity: 0.1;
+}
+.opacity20 {
+  opacity: 0.2;
+}
+.opacity30 {
+  opacity: 0.3;
+}
+.opacity40 {
+  opacity: 0.4;
+}
+.opacity50 {
+  opacity: 0.5;
+}
+.opacity60 {
+  opacity: 0.6;
+}
+.opacity70 {
+  opacity: 0.7;
+}
+.opacity80 {
+  opacity: 0.8;
+}
+.opacity90 {
+  opacity: 0.9;
 }

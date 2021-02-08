@@ -2,7 +2,7 @@
 // edit leaf name of tree
 function edit_name($string) {
   //PhyOp_Range TBL: dbo.oddeleni(alias TBL: o)(0) ASC  Bmk ( COL: Bmk1000 ) IsRow: COL: IsBaseRow1001
-  if(strpos($string, " TBL: ")) {
+  if(strpos($string, "alias TBL: ")) {
     $pom=explode("TBL: ", $string);
     $final=$pom[0]."<br>";
     $pom2=explode("(",$pom[1]);
