@@ -96,23 +96,26 @@ function create_buttons($buttons, $max, $min, $root) {
     return $a['type'] <=> $b['type'];
   });
   foreach ($buttons as $button) {
-    $class=$button["class"];
-    if($button["type"]==1 && $max!=$min) {
-      $opacity=(($button["cost"]-$max)/($min-$max)*60)+30;
-      $number = round($opacity, -1);
-      $class.=" opacity".$number;
-    } 
-    
-    if($button["active"]==1) {
-      $class.=" active_button";
-      if(isset($root["array"])) {
-        $resultArray=add_tree_to_memo($root["array"], $root["root"], $root["key"], $root["tree"], 0, 12)["array"];
-      }
-    } 
-    
-    ?><button class='<?php echo $class; ?>' id='<?php echo $button["id"]; ?>'>
-      <span><?php echo $button["name"]; ?></span>
-    </button><?php
+    if($button["type"]!="") {
+      $class=$button["class"];
+      if($button["type"]==1 && $max!=$min) {
+        $opacity=(($button["cost"]-$max)/($min-$max)*70)+30;
+        //echo $opacity;
+        $number = round($opacity, -1);
+        $class.=" opacity".$number;
+      } 
+      
+      if($button["active"]==1) {
+        $class.=" active_button";
+        if(isset($root["array"])) {
+          $resultArray=add_tree_to_memo($root["array"], $root["root"], $root["key"], $root["tree"], 0, 12)["array"];
+        }
+      } 
+      
+      ?><button class='<?php echo $class; ?>' id='<?php echo $button["id"]; ?>'>
+        <span><?php echo $button["name"]; ?></span>
+      </button><?php
+    }
   }
   return $resultArray;
 }
@@ -397,3 +400,5 @@ function floor1($resultArray, $tree, $root) {
   }
   return $resultArray;
 }
+
+require "all_diagrams.php";
