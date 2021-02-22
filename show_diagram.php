@@ -77,7 +77,7 @@ function find_minimum_cost($resultArray, $group) {
 function find_tree($name, $tree, $key, $i) {
     $tree_name=explode(" ", $tree[$key+1]);
     if(isset($tree_name[$i])) {
-      
+
       if ($tree_name[$i]!= "" && (strpos($name,$tree_name[$i])!==false || strpos($tree_name[$i],$name)!==false)) {
         //echo $key+1;
         return array($key+1,$tree[$key+1]);
@@ -87,7 +87,7 @@ function find_tree($name, $tree, $key, $i) {
 }
 
 function create_buttons($buttons, $max, $min, $root) {
-  $resultArray=$root["array"];
+  $resultArray=[];
   usort($buttons, function($a, $b) {
     return $a['cost'] <=> $b['cost'];
   });
@@ -108,6 +108,7 @@ function create_buttons($buttons, $max, $min, $root) {
       if($button["active"]==1) {
         $class.=" active_button";
         if(isset($root["array"])) {
+          // resultarray, root, key, tree
           $resultArray=add_tree_to_memo($root["array"], $root["root"], $root["key"], $root["tree"], 0, 12)["array"];
         }
       } 
@@ -296,10 +297,11 @@ function find_child($resultArray, $group, $subgroup) {
 
 
 function add_tree_to_memo($resultArray, $group, $subgroup, $tree, $key, $i){
+  
   foreach ($resultArray[$group]["subgroup"] as $pom) {
     if(isset($pom[$subgroup]["groups"])){
       foreach ($pom[$subgroup]["groups"] as $value) {
-
+        
         // get minimum cost value
         if(strpos($value,".")) {
           $pom=explode(".",$value);
@@ -309,10 +311,12 @@ function add_tree_to_memo($resultArray, $group, $subgroup, $tree, $key, $i){
           $group2=$value;
           $subgroup2=find_minimum_cost($resultArray, $value)["minimum"];
         }
-
+              
         $name=find_name($resultArray, $group2, $subgroup2);
         $cost=find_cost($resultArray, $group2, $subgroup2);
+        
         $pom2=find_tree($name, $tree, $key, $i);
+        $name2=$name;
         $key=$pom2[0];
         $name=$pom2[1];
         $resultArray=update_array($resultArray, $group2, $subgroup2, $name);
@@ -335,8 +339,11 @@ function floor1($resultArray, $tree, $root) {
   $buttons=[];
   $max=-1;
   $min=10000000000000;
+  $rootkey=0;
+  $cost2=100000000000;
   foreach ($resultArray[$root]["subgroup"] as $pom) {
     foreach ($pom as $key => $value) {
+      
       $tree_name=explode(" ", $tree[0]);
       $class="groups";
       $active=0;
@@ -344,6 +351,7 @@ function floor1($resultArray, $tree, $root) {
       $button_id="button_for_".$root."-".$key;
       $cost=find_cost($resultArray, $root, $key);
       if(strpos($value["name"],"Phy")!==false) {
+        
         $type=1;
         $class.= " phy-button";
         if($cost>$max) {
@@ -360,6 +368,10 @@ function floor1($resultArray, $tree, $root) {
       {
         $active=1; 
         $class.=" active_button";
+        if($rootkey==0 || $cost2>$cost) {
+          $rootkey=$key;
+          $cost2=$cost;
+        }
       } 
       $pom=[
         "active"=>$active,
@@ -372,13 +384,13 @@ function floor1($resultArray, $tree, $root) {
       array_push($buttons, $pom);
     }
   }
+
   $pom3=[
     "array"=>$resultArray,
     "root"=>$root,
-    "key"=>$key,
+    "key"=>$rootkey,
     "tree"=>$tree
   ];
-  
   $resultArray=create_buttons($buttons, $max, $min, $pom3);
 
   // show diagram

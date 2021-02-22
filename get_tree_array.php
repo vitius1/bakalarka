@@ -39,9 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tree=array();
     $string="";
     foreach ($arr as $value) {
-      
       if(strlen(trim($value)) == 0 && $string!="") {
-        if(strpos($string, 'Exchange Start') == false){
+        if(strpos($string, 'Exchange') == false && strpos($string, 'id TI(int,ML=4)') == false){
           array_push($tree,edit_name($string));
         }
         $string="";

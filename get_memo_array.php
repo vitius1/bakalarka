@@ -10,7 +10,7 @@ function get_string_between($string, $start, $end){
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $final = $_POST['8615'];
-  
+  $original_memo_array=$final;
   $if_multiple=explode("--- Final Memo Structure ---", $final);
   if(count($if_multiple)!=2) {
     $final=$if_multiple[count($if_multiple)-1];
@@ -75,4 +75,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resultArray = array_map('current',$newarray);
     }
   }
+  //print_r($resultArray);
 ?>
