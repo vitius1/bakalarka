@@ -10,6 +10,12 @@ function get_string_between($string, $start, $end){
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $final = $_POST['8615'];
+  
+  $if_multiple=explode("--- Final Memo Structure ---", $final);
+  if(count($if_multiple)!=2) {
+    $final=$if_multiple[count($if_multiple)-1];
+  }
+  
   if (!empty($final))  {
     $group = array();
     $final=explode("----------------------------", $final);
@@ -35,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if(strpos($pom2[$j],"Cost") !== false || strpos($pom2[$j],"(") !== false) {
                   break;
                 }
-                if($pom2[$j] != "" && $pom2[$j] != "ASC") {
+                if($pom2[$j] != "" && $pom2[$j] != "ASC" && (strpos($pom2[$j],".") !== false || (string)(int)$pom2[$j] == $pom2[$j])) {
                   array_push($groups,$pom2[$j]);
                 }
               }

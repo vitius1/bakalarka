@@ -30,6 +30,7 @@ function edit_name($string) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $final = $_POST['8607'];
+  $original_tree_array=$final;
   if (!empty($final)) {
     $final=explode("*** Output Tree: ***", $final);
     $final=explode("********************", $final[1]);

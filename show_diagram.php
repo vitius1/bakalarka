@@ -87,7 +87,7 @@ function find_tree($name, $tree, $key, $i) {
 }
 
 function create_buttons($buttons, $max, $min, $root) {
-  $resultArray=[];
+  $resultArray=$root["array"];
   usort($buttons, function($a, $b) {
     return $a['cost'] <=> $b['cost'];
   });
@@ -228,7 +228,7 @@ function find_child($resultArray, $group, $subgroup) {
             // for replace diagram
             if($style!=""){
               ?>
-              <div class="replace-buttons" id="buttons-replace-diagram-<?php echo $group2."-".$subgroup2; ?>" style="display: none;">
+              <div class="replace-buttons buttons-replace-diagram-<?php echo $group2."-".$subgroup2; ?>" style="display: none;">
                 <?php 
                 $buttons=[];
                 $max=-1;
@@ -277,7 +277,7 @@ function find_child($resultArray, $group, $subgroup) {
             foreach ($pom2["all"] as $sg) {
               $cost=find_cost($resultArray, $group2, $sg);
               $name=find_name($resultArray, $group2, $sg);
-              ?><li style=" display: none;" class="for-replace-root-<?php echo $group2; ?>" id="replace-diagram-<?php echo $group2."-".$sg; ?>">
+              ?><li style=" display: none;" class="for-replace-root-<?php echo $group2; ?> replace-diagram-<?php echo $group2."-".$sg; ?>">
                 <span id="for_<?php echo $group2."-".$subgroup2; ?>" class="subgroups"><?php echo $group2.".".$sg." Cost: ".$cost."</br>".$name; ?>
               </span>
               <?php
@@ -356,7 +356,7 @@ function floor1($resultArray, $tree, $root) {
         $type=2;
         $class.= " log-button";
       }
-      if(strpos($tree_name[8],$value["name"])!==false) 
+      if(strpos($tree_name[8],$value["name"])!==false || strpos($value["name"],$tree_name[8])!==false) 
       {
         $active=1; 
         $class.=" active_button";
@@ -382,6 +382,7 @@ function floor1($resultArray, $tree, $root) {
   $resultArray=create_buttons($buttons, $max, $min, $pom3);
 
   // show diagram
+  
   foreach ($resultArray[$root]["subgroup"] as $pom) {
     foreach ($pom as $key => $value) {
       $tree_name=explode(" ", $tree[0]);

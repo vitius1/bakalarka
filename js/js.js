@@ -1,129 +1,60 @@
-
- 
-
-$('#floor1').on('click', '.groups', function() {
-  var id = this.id.split("button_for_")[1];
+// this floor, floors to hide, id
+function groups(floor, floors, id) {
+  id = id.split("button_for_")[1];
   // remove all active button style which is below
   $(".groups").removeClass("active_button");
   // add active button style to this element
   $(this).addClass("active_button");
   // hide diagrams in floor
-  $("#floor1 ."+id.split("-")[0]).hide();
+  $(floor+" ."+id.split("-")[0]).hide();
   // remove all active field style which is below
   $(".subgroups").removeClass('active_field');
   // remove content which is below
-  $('#floor2, #floor3, #floor4, #floor5').html("");
+  $(floors).html('<div class="replace-dialog" style="display: none;"><H1>Replace</H1><div class="replace-dialog-content"></div></div>');
   // show one diagram
-  $("#floor1 ."+id).show();
-});
+  $(floor+" ."+id).show();
+}
 
+$('#floor1').on('click', '.groups', function() {
+  groups("#floor1", '#floor2, #floor3, #floor4, #floor5', this.id);
+});
 $('#floor2').on('click', '.groups', function() {
-  var id = this.id.split("button_for_")[1];
-  // remove all active button style which is below
-  $("#floor2 .groups, #floor3 .groups, #floor4 .groups, #floor5 .groups").removeClass("active_button");
-  // add active button style to this element
-  $(this).addClass("active_button");
-  // hide diagrams in floor
-  $("#floor2 ."+id.split("-")[0]).hide();
-  // remove all active field style which is below
-  $("#floor2 .subgroups, #floor3 .subgroups, #floor4 .subgroups, #floor5 .subgroups").removeClass('active_field');
-  // remove content which is below
-  $('#floor3, #floor4, #floor5').html("");
-  // show one diagram
-  $("#floor2 ."+id).show();
+  groups("#floor2", '#floor3, #floor4, #floor5', this.id);
 });
-
 $('#floor3').on('click', '.groups', function() {
-  var id = this.id.split("button_for_")[1];
-  // remove all active button style which is below
-  $("#floor3 .groups, #floor4 .groups, #floor5 .groups").removeClass("active_button");
-  // add active button style to this element
-  $(this).addClass("active_button");
-  // hide diagrams in floor
-  $("#floor3 ."+id.split("-")[0]).hide();
-  // remove all active field style which is below
-  $("#floor3 .subgroups, #floor4 .subgroups, #floor5 .subgroups").removeClass('active_field');
-  // remove content which is below
-  $('#floor4, #floor5').html("");
-  // show one diagram
-  $("#floor3 ."+id).show();
+  groups("#floor3", '#floor4, #floor5', this.id);
 });
-
 $('#floor4').on('click', '.groups', function() {
-  var id = this.id.split("button_for_")[1];
-  // remove all active button style which is below
-  $("#floor4 .groups, #floor5 .groups").removeClass("active_button");
-  // add active button style to this element
-  $(this).addClass("active_button");
-  // hide diagrams in floor
-  $("#floor4 ."+id.split("-")[0]).hide();
-  // remove all active field style which is below
-  $("#floor4 .subgroups, #floor5 .subgroups").removeClass('active_field');
-  // remove content which is below
-  $('#floor5').html("");
-  // show one diagram
-  $("#floor4 ."+id).show();
+  groups("#floor4", '#floor5', this.id);
 });
 
+// this floor+1, floors to hide, active field from floors, id
+function subgroups(floor, floors, remove, id2) {
+  var id = "#value_"+id2.split("for_")[1];
+  // remove all active field style which is below
+  $(remove).removeClass('active_field');
+  // add active style to this element
+  $(this).addClass('active_field');
+  var content = '<div class="replace-dialog" style="display: none;"><H1>Replace</H1><div class="replace-dialog-content"></div></div>'+$(id).html();
+  // hide all diagram which is below
+  $(floors).html("");
+  // show diagram
+  $(floor).html(content);
+  // show active button style
+  $(floor+" #button_for_"+id2.split("for_")[1]).addClass("active_button");
+}
 
 $('#floor1').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  // remove all active field style which is below
-  $(".subgroups").removeClass('active_field');
-  // add active style to this element
-  $(this).addClass('active_field');
-  var content = $(id).html();
-  // hide all diagram which is below
-  $('#floor2, #floor3, #floor4, #floor5').html("");
-  // show diagram
-  $('#floor2').html(content);
-  // show active button style
-  $("#floor2 #button_for_"+this.id.split("for_")[1]).addClass("active_button");
+  subgroups("#floor2", '#floor2, #floor3, #floor4, #floor5', ".subgroups", this.id);
 });
-
 $('#floor2').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  // remove all active field style which is below
-  $("#floor2 .subgroups, #floor3 .subgroups, #floor4 .subgroups, #floor5 .subgroups").removeClass('active_field');
-  // add active style to this element
-  $(this).addClass('active_field');
-  var content = $(id).html();
-  // hide all diagram which is below
-  $('#floor3, #floor4, #floor5').html("");
-  // show diagram
-  $('#floor3').html(content);
-  // show active button style
-  $("#floor3 #button_for_"+this.id.split("for_")[1]).addClass("active_button");
+  subgroups("#floor3", '#floor3, #floor4, #floor5',"#floor2 .subgroups, #floor3 .subgroups, #floor4 .subgroups, #floor5 .subgroups", this.id);
 });
-
 $('#floor3').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  // remove all active field style which is below
-  $("#floor3 .subgroups, #floor4 .subgroups, #floor5 .subgroups").removeClass('active_field');
-  // add active style to this element
-  $(this).addClass('active_field');
-  var content = $(id).html();
-  // hide all diagram which is below
-  $('#floor4, #floor5').html("");
-  // show diagram
-  $('#floor4').html(content);
-  // show active button style
-  $("#floor4 #button_for_"+this.id.split("for_")[1]).addClass("active_button");
+  subgroups("#floor4", '#floor4, #floor5',"#floor3 .subgroups, #floor4 .subgroups, #floor5 .subgroups", this.id);
 });
-
 $('#floor4').on('click', '.subgroups',function(){
-  var id = "#value_"+this.id.split("for_")[1];
-  // remove all active field style which is below
-  $("#floor4 .subgroups, #floor5 .subgroups").removeClass('active_field');
-  // add active style to this element
-  $(this).addClass('active_field');
-  var content = $(id).html();
-  // hide all diagram which is below
-  $('#floor5').html("");
-  // show diagram
-  $('#floor5').html(content);
-  // show active button style
-  $("#floor5 #button_for_"+this.id.split("for_")[1]).addClass("active_button");
+  subgroups("#floor5", '#floor5',"#floor4 .subgroups, #floor5 .subgroups", this.id);
 });
 
 // transformation rules - show clicked rule
@@ -147,12 +78,58 @@ $("#memo").click(function(){
   $(".memo-diagram").show();
 });
 
-$(document).on("mousedown", function (e1) {
-  $(document).one("mouseup", function (e2) {
-    if (e1.which == 2 && e1.target == e2.target) {
-      var e3 = $.event.fix(e2);
-      e3.type = "middleclick";
-      $(e2.target).trigger(e3)
-    }
-  });
+
+
+//middleclick
+
+$("body").click(function(event) {
+  if (!$(event.target).is(".replace-dialog")) {
+    $(".replace-dialog").hide();
+  }
 });
+
+function scrollClick(floor, e, id) {
+  if(e.which==2) {
+    $(floor+" .replace-dialog").show();
+    var html = $(".buttons-replace-diagram-"+id.split("for_")[1]).html();
+    $(floor+" .replace-dialog-content").html(html);
+  }
+}
+
+function replaceGroups(floor, t) {
+  var id = $(t).attr("class").split(" ")[1].split("button-replace-diagram-")[1];
+  $(floor+" .for-replace-root-"+id.split("-")[0]).hide();
+  $(floor+" .replace-dialog").hide();
+  $(floor+" .replace-diagram-"+id).show();
+}
+
+$('#floor1').on('mousedown', '.subgroups', function(e) {
+  scrollClick("#floor1", e, this.id);
+});  
+$('#floor1').on('click', '.replace-groups', function() {
+  replaceGroups("#floor1", this);
+});  
+$('#floor2').on('mousedown', '.subgroups', function(e) {
+  scrollClick("#floor2", e, this.id);
+});  
+$('#floor2').on('click', '.replace-groups', function() {
+  replaceGroups("#floor2", this);
+});  
+$('#floor3').on('mousedown', '.subgroups', function(e) {
+  scrollClick("#floor3", e, this.id);
+});  
+$('#floor3').on('click', '.replace-groups', function() {
+  replaceGroups("#floor3", this);
+});  
+$('#floor4').on('mousedown', '.subgroups', function(e) {
+  scrollClick("#floor4", e, this.id);
+});  
+$('#floor4').on('click', '.replace-groups', function() {
+  replaceGroups("#floor4", this);
+});  
+$('#floor5').on('mousedown', '.subgroups', function(e) {
+  scrollClick("#floor5", e, this.id);
+});  
+$('#floor5').on('click', '.replace-groups', function() {
+  replaceGroups("#floor5", this);
+});  
