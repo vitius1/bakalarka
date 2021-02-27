@@ -72,8 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     for($k=count($group)-1; $k>=0;$k--) {
         array_push($newarray, $group[$k]);
     }
-    $resultArray = array_map('current',$newarray);
+    $memo = array_map('current',$newarray);
     }
   }
-  //print_r($resultArray);
+  //print_r($memo);
 ?>

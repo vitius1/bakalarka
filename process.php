@@ -6,7 +6,7 @@
 <div class="memo-diagram">
   <H1 class="center">Memo diagram</H1>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <div class="floor" id="floor1"><?php $resultArray=floor1($resultArray, $tree, $root); ?>
+  <div class="floor" id="floor1"><?php $memo=floor1($memo, $tree, $root); ?>
     <div class="replace-dialog" style="display: none;">
       <H1>Replace</H1>
       <div class="replace-dialog-content"></div>

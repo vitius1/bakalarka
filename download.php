@@ -5,7 +5,7 @@
     </style>
     <li><span>ROOT</span>
       <ul>
-        <?php $resultArray=allDiagrams($resultArray, $tree, $root); ?>
+        <?php $memo=allDiagrams($memo, $tree, $root); ?>
       </ul>
     </li>
   </ul>
