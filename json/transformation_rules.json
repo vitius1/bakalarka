@@ -3,29 +3,76 @@
 
 
   "name": "CommLOJN",
-  "first": "LogOp_RightOuterJoin",
-  "second": "LogOp_LeftOuterJoin",
-  "description": "Right outer join to left outher join </br>select from A join B on A=B => select from B join A on A=B"
+  "first": "LogOp_LeftOuterJoin",
+  "second": "LogOp_RightOuterJoin",
+  "description": "Right outer join to left outher join </br>select from A join B on A=B => select from B join A on A=B",
+  "additional": ""
+},{
+  "name": "CommLSJN",
+  "first": "LogOp_LeftSemiJoin",
+  "second": "LogOp_RightSemiJoin",
+  "description": "Select from A join B on A=B => select from B join A on A=B",
+  "additional": ""
 },{
   "name": "JoinCommute",
   "first": "LogOp_Join",
   "second": "LogOp_Join",
-  "description": "Select from A join B on A=B => select from B join A on A=B"
+  "description": "Select from A join B on A=B => select from B join A on A=B",
+  "additional": ""
 },{
   "name": "JNtoHS",
   "first": "LogOp_Join",
   "second": "PhyOp_HashJoinx_jtInner",
-  "description": "JNtoHS"
+  "description": "JNtoHS",
+  "additional": ""
+},{
+  "name": "JNtoSM",
+  "first": "LogOp_Join",
+  "second": "PhyOp_MergeJoin",
+  "description": "JNtoSM",
+  "additional": ""
 },{
   "name": "LOJNtoNL",
   "first": "LogOp_LeftOuterJoin",
   "second": "PhyOp_LoopsJoinx_jtLeftOuter",
-  "description": "LOJNtoNL - Logical left outer join to physical nested loop left outer join"
+  "description": "LOJNtoNL - Logical left outer join to physical nested loop left outer join",
+  "additional": ""
+},{
+  "name": "RSJNtoHS",
+  "first": "LogOp_RightSemiJoin",
+  "second": "PhyOp_HashJoinx_jtInner",
+  "description": "RSJNtoHS",
+  "additional": ""
+},{
+  "name": "RSJNtoSM",
+  "first": "LogOp_RightSemiJoin",
+  "second": "PhyOp_MergeJoin",
+  "description": "RSJNtoSM",
+  "additional": ""
+},{
+  "name": "ROJNtoHS",
+  "first": "LogOp_RightOuterJoin",
+  "second": "PhyOp_HashJoinx_jtRightOuter",
+  "description": "ROJNtoHS",
+  "additional": ""
+},{
+  "name": "ROJNtoSM",
+  "first": "LogOp_RightOuterJoin",
+  "second": "PhyOp_MergeJoin",
+  "description": "ROJNtoSM",
+  "additional": ""
+},{
+  "name": "ImplRestrRemap",
+  "first": "LogOp_RightSemiJoin",
+  "second": "PhyOp_RestrRemap",
+  "description": "ImplRestrRemap",
+  "additional": ""
 },{
   "name": "EnforceBatch",
   "first": "PhyOp_HashJoinx_jtInner",
   "second": "PhyOp_ExecutionModeAdapter",
-  "description": "EnforceBatch - ???"
+  "description": "EnforceBatch - ???",
+  "additional": ""
 },
 {
   "_comment": "group aggregation",
@@ -34,12 +81,14 @@
   "name": "GbAggToStrm",
   "first": "LogOp_GbAgg",
   "second": "PhyOp_StreamGbAgg",
-  "description": "GbAggToStrm - logical group aggregation to physical group aggregation to Hash Stream"
+  "description": "GbAggToStrm - logical group aggregation to physical group aggregation to Hash Stream",
+  "additional": ""
 },{
   "name": "GbAggToSort",
   "first": "LogOp_GbAgg",
   "second": "PhyOp_Sort",
-  "description": "GbAggToSort - logical group aggregation to physical operator sort"
+  "description": "GbAggToSort - logical group aggregation to physical operator sort",
+  "additional": ""
 },
 {
   "_comment": "Other",
@@ -48,16 +97,37 @@
   "name": "EnforceSort",
   "first": "PhyOp_Range",
   "second": "PhyOp_Sort",
-  "description": "EnforceSort - use physical operator Sort. (mostly from physical range)"
+  "description": "EnforceSort - use physical operator Sort. (mostly from physical range)",
+  "additional": ""
+},{
+  "name": "EnforceSort",
+  "first": "PhyOp_Filter",
+  "second": "PhyOp_Sort",
+  "description": "EnforceSort - use physical operator Sort.",
+  "additional": ""
 },{
   "name": "GetToScan",
   "first": "LogOp_Get",
   "second": "PhyOp_TableScan",
-  "description": "GetToScan - logical operator get to physical operator Table Scan"
+  "description": "GetToScan - logical operator get to physical operator Table Scan",
+  "additional": ""
+},{
+  "name": "GetToScan",
+  "first": "LogOp_Get",
+  "second": "PhyOp_Range",
+  "description": "GetToScan - logical operator get to physical operator Range",
+  "additional": ""
 },{
   "name": "SelectToFilter",
-  "first": "LogOp_SelectRes",
+  "first": "LogOp_Select",
   "second": "PhyOp_Filter",
-  "description": "SelectToFilter - logical operator select to physical operator filter"
+  "description": "SelectToFilter - logical operator select to physical operator filter",
+  "additional": ""
+},{
+  "name": "ProjectToComputeScalar",
+  "first": "LogOp_Project",
+  "second": "PhyOp_ComputeScalar",
+  "description": "ProjectToComputeScalar - logical operator project to physical operator compute Scalar",
+  "additional": ""
 }
 ]
