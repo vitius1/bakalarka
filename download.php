@@ -1,3 +1,87 @@
+<?php 
+function show_all_diagrams($memo, $child_group, $child_subgroup, $more_child, $value, $cost, $name) {
+  if(child_exists($memo, $child_group, $child_subgroup)) {
+    if($more_child==1) {
+      ?><li><span>Group: <?php echo $child_group; ?></span><ul>
+        <?php
+        foreach($groups_cost["all"] as $key) {
+          $name = find_name($memo, $child_group, $key);
+          $cost = find_cost($memo, $child_group, $key);
+          if(child_exists($memo, $child_group, $key)) {
+            ?>
+              <li><span><?php echo $child_group.".".$key." Cost: ".$cost."</br>".$name; ?>
+              </span>
+              <ul>
+            <?php
+            //find_child($memo, $child_group, $child_subgroup);
+            find_child_all($memo, $child_group, $key);
+            ?></ul></li>
+          <?php
+          } else {
+            ?><li><span><?php echo $child_group.".".$key." Cost: ".$cost."</br>".$name; ?></span></li><?php
+          }          
+       } ?>
+    </ul></li><?php
+    } else {
+      ?><li><span><?php echo $value." Cost: ".$cost."</br>".$name; ?>
+      </span>
+      <ul><?php
+      //find_child($memo, $child_group, $child_subgroup);
+      find_child_all($memo, $child_group, $child_subgroup);
+      ?></ul></li><?php
+    }
+  } else {
+      ?><li><span><?php echo $value." Cost: ".$cost."</br>".$name; ?></span></li><?php
+  }
+}
+// memo array, memo group, memo subgroup
+function find_child_all($memo, $group, $subgroup) {
+  foreach ($memo[$group]["subgroup"] as $pom) {
+    if(isset($pom[$subgroup]["groups"])){
+      foreach ($pom[$subgroup]["groups"] as $value) {
+        // get minimum cost value
+        $more_child=0;
+        if(strpos($value,".")) {
+          $pom=explode(".",$value);
+          $child_group=$pom[0];
+          $child_subgroup=$pom[1];
+        } else {
+          $child_group=$value;
+          $groups_cost=find_minimum_cost($memo, $value);
+          $child_subgroup=$groups_cost["minimum"];
+          if(count($groups_cost["all"])>1){
+            $more_child=1;
+          }
+          $value=$child_group.".".$child_subgroup;
+        }
+
+        $father_name=find_name($memo, $group, $subgroup);
+        $name=find_name($memo, $child_group, $child_subgroup);
+        $cost=find_cost($memo, $child_group, $child_subgroup);
+      
+        // exception, bad qcol if is not ScaOp_Comp
+        if(!strpos($father_name, "ScaOp_Comp") && strpos($name, "ScaOp_Identifier")) {
+          $name=explode("QCOL", $name)[0];
+        } 
+        show_all_diagrams($memo, $child_group, $child_subgroup, $more_child, $value, $cost, $name);
+      }
+    }
+  }
+}
+
+function allDiagrams($memo, $tree, $root) {
+  // show diagram
+  foreach ($memo[$root]["subgroup"] as $pom) {
+    foreach ($pom as $key => $value) {
+        ?><li><span><?php echo "Group: ".$root.".".$key."  Cost: ".$value["cost"]."</br>".$tree[0] ?></span><ul><?php
+        find_child_all($memo, $root, $key);
+        ?></ul></li><?php
+    }
+  }
+  return $memo;
+}
+?>
+
 <div class="center" id="diagram-html" style="display: none;">
   <ul class="tree">
     <style>
@@ -35,6 +119,6 @@ $("#download-html").click(function(){
 $("#download-config").click(function(){
   var html = $("#config").html();
   var blob = new Blob([html], {type: "text/plain;charset=utf-8"});
-  saveAs(blob, "index.config");
+  saveAs(blob, "memo/tree.txt");
 });
 </script>

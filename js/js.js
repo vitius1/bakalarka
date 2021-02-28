@@ -1,10 +1,10 @@
 // this floor, floors to hide, id
-function groups(floor, floors, id) {
-  id = id.split("button_for_")[1];
+function groups(floor, floors, th) {
+  var id = th.id.split("button_for_")[1];
   // remove all active button style which is below
   $(".groups").removeClass("active_button");
   // add active button style to this element
-  $(this).addClass("active_button");
+  $(th).addClass("active_button");
   // hide diagrams in floor
   $(floor+" ."+id.split("-")[0]).hide();
   // remove all active field style which is below
@@ -16,16 +16,16 @@ function groups(floor, floors, id) {
 }
 
 $('#floor1').on('click', '.groups', function() {
-  groups("#floor1", '#floor2, #floor3, #floor4, #floor5', this.id);
+  groups("#floor1", '#floor2, #floor3, #floor4, #floor5', this);
 });
 $('#floor2').on('click', '.groups', function() {
-  groups("#floor2", '#floor3, #floor4, #floor5', this.id);
+  groups("#floor2", '#floor3, #floor4, #floor5', this);
 });
 $('#floor3').on('click', '.groups', function() {
-  groups("#floor3", '#floor4, #floor5', this.id);
+  groups("#floor3", '#floor4, #floor5', this);
 });
 $('#floor4').on('click', '.groups', function() {
-  groups("#floor4", '#floor5', this.id);
+  groups("#floor4", '#floor5', this);
 });
 
 // this floor+1, floors to hide, active field from floors, id
