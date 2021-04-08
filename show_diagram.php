@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="css/style.css">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap" rel="stylesheet">
 <?php
 // require $memo array of memo structure
 require_once "get_memo_array.php"; // return $memo
@@ -85,12 +82,14 @@ function find_minimum_cost($memo, $group) {
 // return name and key
 function update_tree_index($name, $tree, $key, $i) {
     // remove trash from tree name
-    $tree_name=explode(" ", $tree[$key+1]);
-    if(isset($tree_name[$i])) {
-      // if tree name LIKE memo name
-      if ($tree_name[$i]!= "" && (strpos($name,$tree_name[$i])!==false || strpos($tree_name[$i],$name)!==false)) {
-        //echo $key+1;
-        return array($key+1,$tree[$key+1]);
+    if(isset($tree[$key+1])){
+      $tree_name=explode(" ", $tree[$key+1]);
+      if(isset($tree_name[$i])) {
+        // if tree name LIKE memo name
+        if ($tree_name[$i]!= "" && (strpos($name,$tree_name[$i])!==false || strpos($tree_name[$i],$name)!==false)) {
+          //echo $key+1;
+          return array($key+1,$tree[$key+1]);
+        }
       }
     }
   return array($key,$name);

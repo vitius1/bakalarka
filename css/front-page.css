@@ -1,0 +1,25 @@
+@charset "UTF-8";
+body, .center {
+  font-family: 'Roboto Slab', serif;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  overflow-x: hidden; 
+}
+H1 {
+  text-align: center;
+}
+
+button, input[type=submit] {
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 7px 12px;
+  margin: 4px 0;
+  background-color: #87CEFA;
+}
+
+button:hover, input[type=submit]:hover {
+  background-color: #00BFFF;
+}

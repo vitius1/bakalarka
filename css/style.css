@@ -133,6 +133,11 @@ body {
   right: 0;
 }
 
+.transformation-rules .subgroups {
+  background-color: white !important;
+  cursor: text !important;
+} 
+
 .active_field {
   color: #FFFFFF;
   background-color: #1E90FF;
@@ -226,4 +231,39 @@ body {
 }
 .opacity90 {
   opacity: 0.9;
+}
+
+/* menu */
+
+#menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+#menu li {
+  float: left;
+}
+
+#menu li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#menu li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #696969;
+}
+
+#menu {
+  margin: -10px;
 }

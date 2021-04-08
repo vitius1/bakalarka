@@ -68,14 +68,18 @@ $('.transformation-rules').on('click', '.rules', function() {
 
 // show transformation rules page
 $("#rules").click(function(){
-  $(".transformation-rules").show();
   $(".memo-diagram").hide();
+  $(".transformation-rules").show();
+  $("#memo").removeClass("active");
+  $(this).addClass("active");
 });
 
 // memo diagram page
 $("#memo").click(function(){
   $(".transformation-rules").hide();
   $(".memo-diagram").show();
+  $("#rules").removeClass("active");
+  $(this).addClass("active");
 });
 
 

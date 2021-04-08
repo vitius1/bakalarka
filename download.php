@@ -1,7 +1,7 @@
 <?php 
-function show_all_diagrams($memo, $child_group, $child_subgroup, $more_child, $value, $cost, $name) {
+function show_all_diagrams($memo, $child_group, $child_subgroup, $value, $cost, $name, $groups_cost) {
   if(child_exists($memo, $child_group, $child_subgroup)) {
-    if($more_child==1) {
+    if($groups_cost!=0) {
       ?><li><span>Group: <?php echo $child_group; ?></span><ul>
         <?php
         foreach($groups_cost["all"] as $key) {
@@ -40,7 +40,7 @@ function find_child_all($memo, $group, $subgroup) {
     if(isset($pom[$subgroup]["groups"])){
       foreach ($pom[$subgroup]["groups"] as $value) {
         // get minimum cost value
-        $more_child=0;
+        $groups_cost=0;
         if(strpos($value,".")) {
           $pom=explode(".",$value);
           $child_group=$pom[0];
@@ -63,7 +63,7 @@ function find_child_all($memo, $group, $subgroup) {
         if(!strpos($father_name, "ScaOp_Comp") && strpos($name, "ScaOp_Identifier")) {
           $name=explode("QCOL", $name)[0];
         } 
-        show_all_diagrams($memo, $child_group, $child_subgroup, $more_child, $value, $cost, $name);
+        show_all_diagrams($memo, $child_group, $child_subgroup, $value, $cost, $name, $groups_cost);
       }
     }
   }
@@ -104,8 +104,8 @@ function allDiagrams($memo, $tree, $root) {
   ###end-tree###
 </div>
 
-<div id="download-config" class="groups">download config</div>
-<div id="download-html" class="groups">download html</div>
+<div id="download-config" class="groups">download diagram settings</div>
+<div id="download-html" class="groups">download diagram in html</div>
 If you want download svg use download html and use this page: <a href="https://www.hiqpdf.com/demo/ConvertHtmlToSvg.aspx" target="_blank">link</a>
 
 <script src="js/FileSaver.js"></script>
