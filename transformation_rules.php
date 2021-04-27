@@ -37,6 +37,29 @@ function FindGroupName($memo, $name) {
   return $array;
 }
 
+// find all child
+function FindGroupChild($memo, $group, $subgroup) {
+  $array=[];
+  foreach ($memo[$group]["subgroup"] as $pom) {
+    foreach ($pom[$subgroup]["groups"] as $child) {
+      if($child!="") {
+        $array[]=$child;
+      }
+    }
+  }
+  return $array;
+}
+
+function HasSameChilds($log, $phy) {
+  $return = true;
+  foreach ($log as $child) {
+    if(!in_array($child, $phy)) {
+      $return = false;
+    }
+  }
+  return $return;
+}
+
 // find all transformation rules in our diagram
 function Rules($memo) {
   // load rules
@@ -47,15 +70,33 @@ function Rules($memo) {
     $description=$json["description"];
     $log_join=FindGroupName($memo, $json["first"]);
     $phy_join=FindGroupName($memo, $json["second"]);
+
     $group="";
+    
+    if($json["additional"]=="commute") {
+      
+    }
+    
     foreach ($log_join as $log) {
       foreach ($phy_join as $phy) {
         // we wouldnt display multiple same rules in one group. Only one same rule for one group
         if($group!=$log["group"]) {
           if($log["group"]==$phy["group"] && $log["subgroup"]!=$phy["subgroup"]) {
-            $group=$log["group"];
-            ?> <button class="rules" id="rule_for_<?php echo $log["group"].'_'.$log["subgroup"].'_'.$phy["subgroup"]; ?>"><span><?php echo $json["name"]; ?></span></button> <?php
-            array_push($rule, ["name" => $json["name"], "group" => $log["group"], "sub1" => $log["subgroup"], "sub2" => $phy["subgroup"], "name1" => $log["name"], "name2" => $phy["name"], "description" => $description]);
+            if($json["additional"]=="commute" || $json["additional"]=="associate") {
+              $log_childs = FindGroupChild($memo, $log["group"], $log["subgroup"]);
+              $phy_childs = FindGroupChild($memo, $phy["group"], $phy["subgroup"]);  
+              // if join commute then childs of the operator must be to same 
+              // in join associate cant be childs same        
+              if((HasSameChilds($log_childs, $phy_childs) && $json["additional"]=="commute") || (!HasSameChilds($log_childs, $phy_childs) && $json["additional"]=="associate")) {
+                $group=$log["group"];
+                ?> <button class="rules" id="rule_for_<?php echo $log["group"].'_'.$log["subgroup"].'_'.$phy["subgroup"]; ?>"><span><?php echo $json["name"]; ?></span></button> <?php
+                array_push($rule, ["name" => $json["name"], "group" => $log["group"], "sub1" => $log["subgroup"], "sub2" => $phy["subgroup"], "name1" => $log["name"], "name2" => $phy["name"], "description" => $description]);
+              }
+            } else {
+              $group=$log["group"];
+              ?> <button class="rules" id="rule_for_<?php echo $log["group"].'_'.$log["subgroup"].'_'.$phy["subgroup"]; ?>"><span><?php echo $json["name"]; ?></span></button> <?php
+              array_push($rule, ["name" => $json["name"], "group" => $log["group"], "sub1" => $log["subgroup"], "sub2" => $phy["subgroup"], "name1" => $log["name"], "name2" => $phy["name"], "description" => $description]);
+            }          
           }
         }
       }

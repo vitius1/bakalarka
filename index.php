@@ -5,8 +5,9 @@
 
 <?php  
 function error_found(){
-  // uncomment for debuging
-  header("Location: index.php");
+  // uncomment echo for debuging
+  //echo "<b>Custom error:</b> [$errno] $errstr<br>";
+  //echo " Error on line $errline in $errfile<br>";
 }
 set_error_handler('error_found');
 

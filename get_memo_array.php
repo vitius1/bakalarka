@@ -45,14 +45,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   array_push($groups,$pom2[$j]);
                 }
               }
-
-              $subgroup_pom=array(
-                $pom2[3]=>array(
-                "name"=>$pom2[4],
-                "groups"=>$groups,
-                "cost"=>$pom3
-              ));
-              array_push($subgroup,$subgroup_pom);
+              // name is not empty
+              if(isset($pom2[4])) {
+                $subgroup_pom=array(
+                  $pom2[3]=>array(
+                  "name"=>$pom2[4],
+                  "groups"=>$groups,
+                  "cost"=>$pom3
+                ));    
+                array_push($subgroup,$subgroup_pom);
+              }
 
             }
           }

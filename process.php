@@ -2,9 +2,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@350&display=swap" rel="stylesheet">
 <?php
-function error_found(){
-  // uncomment for debuging
-  header("Location: index.php");
+function error_found($errno, $errstr, $errfile, $errline){
+  // uncomment echo for debuging
+  //echo "<b>Custom error:</b> [$errno] $errstr<br>";
+  //echo " Error on line $errline in $errfile<br>";
 }
 set_error_handler('error_found');
 

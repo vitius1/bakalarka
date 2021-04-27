@@ -439,6 +439,7 @@ function floor1($memo, $tree, $root) {
   ];
   // create html buttons and update memo array 
   $memo=create_buttons($buttons, $max, $min, $array);
+  
 
   // show diagram
   foreach ($memo[$root]["subgroup"] as $pom) {
