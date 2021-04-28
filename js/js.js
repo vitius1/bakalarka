@@ -7,7 +7,6 @@ function groups(floor, floors, th) {
   $(th).addClass("active_button");
   // hide diagrams in floor
   $(floor + " ." + id.split("-")[0]).hide();
-  alert(floor + " ." + id.split("-")[0]);
   // remove all active field style which is below
   $(".subgroups").removeClass('active_field');
   // remove content which is below
