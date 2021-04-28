@@ -70,12 +70,7 @@ function Rules($memo) {
     $description=$json["description"];
     $log_join=FindGroupName($memo, $json["first"]);
     $phy_join=FindGroupName($memo, $json["second"]);
-
     $group="";
-    
-    if($json["additional"]=="commute") {
-      
-    }
     
     foreach ($log_join as $log) {
       foreach ($phy_join as $phy) {
